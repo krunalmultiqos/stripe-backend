@@ -1,5 +1,8 @@
 const express = require('express')
 const app = express()
+
+require('dotenv').config()
+
 const stripe = require('stripe')('sk_test_51PERmKSJ8yiMMXua4SZbiSSEy3ulgmylWtfimsdiAHcj7rwcR2H4G2DaHN6p5LwNrS1xXrVndf89Vy42fr9o7I2e00Rge0tdvS')
 const port = 8000
 var cors = require('cors')
@@ -59,7 +62,7 @@ app.post('/create-checkout-session', async (req, res) => {
         })
         console.log('price', price)
         const session = await stripe.checkout.sessions.create({
-            success_url: 'http://localhost:3002/success',
+            success_url: `${process.env.SUCCESS_URL}/success`,
             line_items: [
                 {
                     price: price.id,
